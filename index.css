@@ -1,0 +1,92 @@
+body {
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        color: #ff6b35;
+        text-shadow: 3px 3px 0 #ffd23f, 6px 6px 0 rgba(0,0,0,0.1);
+        font-size: 2.5em;
+        margin: 10px;
+    }
+
+    #gameContainer {
+        position: relative;
+        border: 6px solid #2d3436;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        overflow: hidden;
+    }
+
+    canvas {
+        display: block;
+        background: #4caf50; /* Grass color */
+    }
+
+    #scoreBoard {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #2d3436;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #gameOver {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px 50px;
+        border-radius: 20px;
+        text-align: center;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    #gameOver h2 {
+        color: #e74c3c;
+        font-size: 2em;
+        margin: 0 0 10px 0;
+    }
+
+    #gameOver button {
+        background: #ff6b35;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.2em;
+        border-radius: 25px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: bold;
+        margin-top: 10px;
+        box-shadow: 0 4px 0 #c54620;
+    }
+
+    #gameOver button:hover {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 #c54620;
+    }
+
+    #instructions {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 12px 25px;
+        border-radius: 10px;
+        margin-top: 15px;
+        color: #2d3436;
+        font-size: 1.1em;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }

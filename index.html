@@ -1,0 +1,35 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="index.js" defer></script>
+	<link rel="stylesheet" href="index.css">
+	<title>Driving Game</title>
+</head>
+<body>
+	<div style="width: 98%; display:flex; flex-flow: wrap; justify-content: space-around;">
+		<div id="gameContainer">
+			<!-- HTML5 Canvas - Graphics render here -->
+			<canvas id="gameCanvas" width="500" height="600"></canvas>
+
+			<div id="scoreBoard">Score: <span id="score">0</span></div>
+
+			<!-- Game over board -->
+			<div id="gameOver">
+				<h2>💥 You Lose!</h2>
+				<p>Score: <span id="finalScore">0</span></p>
+				<button onclick="restartGame()">Play Again</button>
+			</div>
+		</div>
+
+		<!-- Instructions Card -->
+		<div id="instructions" style="height: fit-content;">
+			<h3>Instructions</h3>
+			<p>Use ← and → arrow keys to steer the car.</p>
+			<p>Dodge obstacles to raise your score.</p>
+		</div>
+	</div>
+	
+</body>
+</html>
