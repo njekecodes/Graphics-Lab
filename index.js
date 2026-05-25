@@ -21,8 +21,7 @@ const player = {
     height: 70,
     color: '#e74c3c',      // Bright red - cartoonish
     
-    // VERTICES in local/model space (centered around 0,0)
-    // These define the geometric shape of the car body
+    // car vertices in local space - centered around 0,0
     vertices: [
         { x: -20, y: -35 }, // top-left corner
         { x:  20, y: -35 }, // top-right corner
@@ -31,6 +30,7 @@ const player = {
     ]
 };
 
+// Geometry
 // Set different types of obstacles
 const obstacleTypes = [
     {
@@ -55,8 +55,8 @@ const obstacleTypes = [
         ]
     },
     {
-        // Stone (hexagon)
-        type: 'stone',
+        // Rock (hexagon)
+        type: 'rock',
         color: '#7f8c8d',
         vertices: [
             { x:   0, y: -22 },
@@ -68,8 +68,8 @@ const obstacleTypes = [
         ]
     }
 ];
-
-// Transformation Function
+// Geometry
+// Transformation Function - translation
 function transformVertices(vertices, translateX, translateY, rotation = 0) {
     const transformed = [];
     const cos = Math.cos(rotation);
@@ -81,7 +81,6 @@ function transformVertices(vertices, translateX, translateY, rotation = 0) {
         const rotatedY = v.x * sin + v.y * cos;
         
         // Apply translation transformation
-        // Result: vertex position in SCREEN/WORLD space
         transformed.push({
             x: rotatedX + translateX,
             y: rotatedY + translateY
@@ -90,7 +89,8 @@ function transformVertices(vertices, translateX, translateY, rotation = 0) {
     return transformed;
 }
 
-// Drawing Filled Polygons - convert transform 
+// Rasterization
+// Drawing Filled Polygons - convert transform into pixels
 function rasterizePolygon(vertices, fillColor, strokeColor = '#000', lineWidth = 2) {
     if (vertices.length === 0) return;
     
@@ -114,7 +114,8 @@ function rasterizePolygon(vertices, fillColor, strokeColor = '#000', lineWidth =
     ctx.stroke();
 }
 
-//Drawing the Road ★
+// Rasterization
+// Drawing the Road ★
 function drawRoad() {
     // Road surface - large filled rectangle 
     ctx.fillStyle = '#34495e';
@@ -143,13 +144,14 @@ function drawRoad() {
     }
 }
 
-//Drawing Car Details - windows, wheels, and decorations on top of the car body.
+// Rasterization
+// Drawing Car Details - windows, wheels, and decorations on top of the car body.
 function drawCarDetails(centerX, centerY, isPlayer = true) {
-    // Windshield (small rectangle) - positioned relative to car center
+    // Windshield (small rectangle) - relative to car centre
     ctx.fillStyle = isPlayer ? '#85c1e9' : '#a9dfbf';
     ctx.fillRect(centerX - 14, centerY - 25, 28, 18);
     
-    // Wheels (4 small black rectangles)
+    // Wheels - 4 small black rectangles
     ctx.fillStyle = '#1a1a1a';
     ctx.fillRect(centerX - 24, centerY - 25, 6, 15); // top-left wheel
     ctx.fillRect(centerX + 18, centerY - 25, 6, 15); // top-right wheel
@@ -234,16 +236,16 @@ function gameLoop() {
             return;
         }
     }
-    
+
+    // Rasterization
     //Clear the framebuffer ★
     ctx.fillStyle = '#4caf50';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    
+
     // Draw the road and lane markings
     drawRoad();
-    
-    // Transform vertices from model space to screen space
-    // Fill the resulting polygon with pixels */
+
+    // Geometry
     for (let obs of obstacles) {
         // Transform the obstacle's local vertices into screen coordinates by applying translation (and rotation for rocks)
         const transformedVerts = transformVertices(
@@ -252,7 +254,8 @@ function gameLoop() {
             obs.y,           // translate Y to world position
             obs.rotation     // apply rotation (for rocks)
         );
-        
+
+        // Rasterization
         // Convert the transformed polygon vertices into pixels on canvas
         rasterizePolygon(transformedVerts, obs.color, '#2c3e50', 3);
         
@@ -261,16 +264,17 @@ function gameLoop() {
             drawCarDetails(obs.x, obs.y, false);
         }
     }
-    
-    // Transform player car vertices from local space to screen space
-    // by translating them to the player's current world position
+
+    // Geometry
+    // Transform player car vertices by translating them to the player's current world position
     const playerVerts = transformVertices(
         player.vertices,
         player.x,
         player.y,
         0  // no rotation for player car
     );
-    
+
+    // Rasterization
     // Fill the transformed polygon with pixels to draw the car body
     rasterizePolygon(playerVerts, player.color, '#2c3e50', 3);
     
